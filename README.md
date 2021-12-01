@@ -3,14 +3,6 @@
   Tambem usado as lib react-router-dom para as rotas, redux e react-redux para troca de informações.\
   Axios para comunicação com a api (https://www.pexels.com/api/documentation/#photos;) 
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
 ### `yarn start`
 
 Runs the app in the development mode.\
