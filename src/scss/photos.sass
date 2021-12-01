@@ -1,0 +1,68 @@
+@import "global"
+
+.Home-head
+  height: 3rem
+  background: linear-gradient(
+    180deg,
+    rgba(27, 113, 234, 1) 0%,
+    rgba(17, 206, 251, 1) 85%
+  );
+  width: 95%
+  margin-top: 3vh
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  padding: 23px
+
+// Select
+.select select
+  height: 3vh
+  width: 6rem
+  text-align: center
+  border-radius: 5px
+
+.center
+  display: flex
+  width: 100%
+  justify-content: center
+  align-items: center
+
+//Styles container photos
+
+.Galery
+  display: grid
+  grid-template-columns: repeat(auto-fill, minmax(23rem, 19rem))
+  padding: 2px
+  justify-content: center
+  justify-items: center
+  align-items: center
+  margin-bottom: 30px
+
+.Container-photo
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  height: 23rem
+  width: 19rem
+  margin: 16px
+
+  &:hover
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+  & img
+    height: 100%
+    width: 100%
+    object-fit: cover
+
+article
+  position: relative
+
+.Container-info
+  position: absolute
+  bottom: 0
+  width: 100%
+  padding: 10px
+  background-color: rgba(218, 226, 232, 0.2)
+  text-align: initial
+  color: white

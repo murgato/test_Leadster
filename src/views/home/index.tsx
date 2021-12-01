@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
-
+import React, { useEffect, useState } from "react";
 import "../../css/photos.css";
-import { ContainerPhoto } from "./Components/Index";
+import { ContainerPhoto, Select, Pagination } from "./Components/Index";
 import { IPhotoState, IPhoto } from "../../store/photos/types";
 import { setPhotos, setInformationPage } from "../../store/photos/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { ControllerPhotos } from "../../controllers";
 
 const Home: React.FC = () => {
+  const [localPhotos, setLocalPhotos] = useState<IPhoto[]>();
   const photos = useSelector<IPhotoState, IPhotoState["photos"]>(
     (state) => state.photos
   );
+
   const information_page = useSelector<
     IPhotoState,
     IPhotoState["information_page"]
@@ -21,38 +22,87 @@ const Home: React.FC = () => {
     let response = await ControllerPhotos.getPhotos({
       per_page: information_page.per_page,
     });
-    await dispatch(
+
+    dispatch(
       setInformationPage({
         per_page: response.per_page,
         page: response.page,
         total_results: response.total_results,
       })
     );
-    await dispatch(setPhotos(response.photos));
+    dispatch(setPhotos(response.photos));
   };
-  const onChangeSelect = (value: any) => {};
+
   useEffect(() => {
     pulutatePhotos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setLocalPhotos(photos);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [photos]);
+
+  useEffect(() => {
+    pulutatePhotos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [information_page.per_page]);
+
+  const onChangeSelect = async (value: any) => {
+    let arrInformation_page = JSON.parse(JSON.stringify(information_page));
+    await dispatch(
+      setInformationPage({ ...arrInformation_page, per_page: Number(value) })
+    );
+  };
+  const onClickPage = async (value: string | number) => {
+    let response = await ControllerPhotos.getPhotos({
+      per_page: information_page.per_page,
+      page: value,
+    });
+    dispatch(
+      setInformationPage({
+        per_page: response.per_page,
+        page: response.page,
+        total_results: response.total_results,
+      })
+    );
+    dispatch(setPhotos(response.photos));
+  };
   return (
     <div className="Container">
-      <div className="Home-head">
-     </div>
+      <div className="center">
+        <div className="Home-head">
+          <Select
+            value={information_page.per_page}
+            onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              onChangeSelect(e.currentTarget.value)
+            }
+          />
+        </div>
+      </div>
       <section className="Galery">
-        {photos && typeof photos !== "undefined"
-          ? photos.map((photo: IPhoto) => <ContainerPhoto 
-          id={photo.id}
-          image={photo.src.original}
-          photographer={photo.photographer}
-          photographer_url={photo.photographer_url}
-           />)
+        {localPhotos && typeof localPhotos !== "undefined"
+          ? localPhotos.map((photo: IPhoto) => (
+              <div key={photo.id}>
+                <ContainerPhoto
+                  image={photo.src.medium}
+                  photographer={photo.photographer}
+                  photographer_url={photo.photographer_url}
+                />
+              </div>
+            ))
           : null}
       </section>
+      {information_page.total_results !== 0 ? (
+        <Pagination
+          per_page={information_page.per_page}
+          total_results={information_page.total_results}
+          onClickPage={onClickPage}
+        />
+      ) : null}
     </div>
   );
 };
 
 export default Home;
-//TODO criar components para fotos
 //TODO implementar modo dark

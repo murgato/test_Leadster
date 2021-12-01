@@ -5,7 +5,7 @@ const initialState: IPhotoState = {
   information_page: {
     total_results: 0,
     page: 0,
-    per_page: 15,
+    per_page: 16,
   },
 };
 

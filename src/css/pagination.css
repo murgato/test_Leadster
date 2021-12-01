@@ -62,3 +62,26 @@ code {
 .Container {
   min-height: 90vh;
 }
+
+.container-button {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.button {
+  width: 1.9rem;
+  height: 1.9rem;
+  background-color: none;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #dae2e8;
+}
+
+.button.button-page.active {
+  border-bottom: 5px solid #1b71ea;
+}
